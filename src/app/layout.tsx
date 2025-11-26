@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/Navigation'
 import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
+import AccessibilitySuite from '@/components/AccessibilitySuite'
+import FocusMode from '@/components/FocusMode'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,13 +39,16 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-          <Navigation />
-          <main className="flex-1">
-            {children}
-          </main>
-        </div>
+        <FocusMode>
+          <div className="min-h-screen flex flex-col">
+            <Navigation />
+            <main className="flex-1" role="main" id="main-content">
+              {children}
+            </main>
+          </div>
+        </FocusMode>
         <ServiceWorkerRegistration />
+        <AccessibilitySuite />
       </body>
     </html>
   )

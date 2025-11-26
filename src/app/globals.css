@@ -40,6 +40,13 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 .sensory-gradient {
@@ -55,4 +62,30 @@ body {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+*:focus {
+  outline: 2px solid theme('colors.sensory.sky.500');
+  outline-offset: 2px;
+}
+
+body[data-focus-mode="on"] {
+  filter: saturate(calc(100% - var(--focus-desaturation, 0%)));
+}
+
+body[data-eco="on"] * {
+  animation-duration: 0.5s !important;
+  transition-duration: 0.2s !important;
 }

@@ -75,6 +75,10 @@ export class AudioManager {
     this.playNote('A4', '32n')
   }
 
+  playBreathingPhaseSound() {
+    this.playNote('F4', '16n')
+  }
+
   dispose() {
     if (this.synth) {
       this.synth.dispose()
