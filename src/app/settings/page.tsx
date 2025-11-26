@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useAppStore } from '@/store/useAppStore'
 import { useHapticFeedback } from '@/hooks/useHapticFeedback'
+import AccessibilityPanel from '@/components/AccessibilityPanel'
 
 export default function SettingsPage() {
   const { userSettings, updateUserSettings, atmosphericLayers, toggleAtmosphericLayer } = useAppStore()
@@ -35,6 +36,8 @@ export default function SettingsPage() {
         </p>
 
         <div className="space-y-6">
+          <AccessibilityPanel />
+
           <section className="p-6 glass-morphism rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Accessibility</h2>
             

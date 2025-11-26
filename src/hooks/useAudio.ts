@@ -21,7 +21,7 @@ export function useAudio() {
     }
   }, [audioEnabled, initialized])
 
-  const playSound = (type: 'success' | 'error' | 'navigation' | 'tabla') => {
+  const playSound = (type: 'success' | 'error' | 'navigation' | 'tabla' | 'breathing-phase') => {
     if (!audioEnabled || !initialized) return
 
     switch (type) {
@@ -36,6 +36,9 @@ export function useAudio() {
         break
       case 'tabla':
         audioManager.playTablaBeat()
+        break
+      case 'breathing-phase':
+        audioManager.playBreathingPhaseSound()
         break
     }
   }

@@ -29,7 +29,7 @@ export function Navigation() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 glass-morphism border-b border-gray-200 dark:border-gray-800">
+    <nav className="sticky top-0 z-50 glass-morphism border-b border-gray-200 dark:border-gray-800" aria-label="Primary navigation">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link

@@ -11,6 +11,7 @@ import DestinationAudioPlayer from '@/components/DestinationAudioPlayer'
 import DestinationInfoPanel from '@/components/DestinationInfoPanel'
 import DestinationBreadcrumb from '@/components/DestinationBreadcrumb'
 import SensoryLayerToggle from '@/components/SensoryLayerToggle'
+import AddToScrapbookButton from '@/components/AddToScrapbookButton'
 import type { State, District } from '@/data/types'
 
 export default function DestinationPage() {
@@ -159,6 +160,16 @@ export default function DestinationPage() {
                   </div>
                 )}
               </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: userSettings.reducedMotion ? 0 : 0.6, delay: 0.5 }}
+              className="p-4 rounded-lg bg-white/10 border border-white/20 backdrop-blur"
+            >
+              <h3 className="font-semibold text-white mb-3">Memory Keeper</h3>
+              <AddToScrapbookButton destination={destination} />
             </motion.div>
           </div>
         </div>
