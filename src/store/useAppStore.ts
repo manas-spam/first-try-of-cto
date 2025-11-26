@@ -21,6 +21,7 @@ export interface NavigationContext {
   currentRoute: string
   previousRoute: string | null
   isTransitioning: boolean
+  cinematicNavigationActive: boolean
 }
 
 interface AppState {
@@ -30,6 +31,7 @@ interface AppState {
   
   setCurrentRoute: (route: string) => void
   setIsTransitioning: (isTransitioning: boolean) => void
+  setCinematicNavigationActive: (active: boolean) => void
   toggleAtmosphericLayer: (id: string) => void
   setLayerOpacity: (id: string, opacity: number) => void
   updateUserSettings: (settings: Partial<UserSettings>) => void
@@ -60,6 +62,7 @@ export const useAppStore = create<AppState>()(
           currentRoute: '/',
           previousRoute: null,
           isTransitioning: false,
+          cinematicNavigationActive: false,
         },
         atmosphericLayers: defaultLayers,
         userSettings: defaultSettings,
@@ -67,6 +70,7 @@ export const useAppStore = create<AppState>()(
         setCurrentRoute: (route: string) =>
           set((state) => ({
             navigationContext: {
+              ...state.navigationContext,
               currentRoute: route,
               previousRoute: state.navigationContext.currentRoute,
               isTransitioning: false,
@@ -78,6 +82,14 @@ export const useAppStore = create<AppState>()(
             navigationContext: {
               ...state.navigationContext,
               isTransitioning,
+            },
+          })),
+
+        setCinematicNavigationActive: (active: boolean) =>
+          set((state) => ({
+            navigationContext: {
+              ...state.navigationContext,
+              cinematicNavigationActive: active,
             },
           })),
 

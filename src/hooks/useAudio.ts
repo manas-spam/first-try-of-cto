@@ -21,7 +21,7 @@ export function useAudio() {
     }
   }, [audioEnabled, initialized])
 
-  const playSound = (type: 'success' | 'error' | 'navigation') => {
+  const playSound = (type: 'success' | 'error' | 'navigation' | 'tabla') => {
     if (!audioEnabled || !initialized) return
 
     switch (type) {
@@ -33,6 +33,9 @@ export function useAudio() {
         break
       case 'navigation':
         audioManager.playNavigationSound()
+        break
+      case 'tabla':
+        audioManager.playTablaBeat()
         break
     }
   }

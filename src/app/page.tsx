@@ -1,16 +1,36 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useAppStore } from '@/store/useAppStore'
 import { useHapticFeedback } from '@/hooks/useHapticFeedback'
+import CinematicNavigation from '@/components/CinematicNavigation'
+import { State } from '@/data/types'
 
 export default function Home() {
   const { triggerHaptic } = useHapticFeedback()
   const userSettings = useAppStore((state) => state.userSettings)
+  const [showCinematicNavigation, setShowCinematicNavigation] = useState(false)
 
   const handleCardClick = () => {
     triggerHaptic('light')
+  }
+
+  const handleAtlasClick = () => {
+    setShowCinematicNavigation(true)
+    triggerHaptic('medium')
+  }
+
+  const handleCinematicComplete = (selectedState?: State) => {
+    setShowCinematicNavigation(false)
+    // Navigate to atlas with optional state selection
+    if (selectedState) {
+      // You could navigate to a specific state view here
+      window.location.href = `/atlas?state=${selectedState.id}`
+    } else {
+      window.location.href = '/atlas'
+    }
   }
 
   const cards = [
@@ -19,6 +39,8 @@ export default function Home() {
       description: 'Explore the immersive globe and terrain',
       href: '/atlas',
       color: 'sensory-earth',
+      onClick: handleAtlasClick,
+      isSpecial: true,
     },
     {
       title: 'Destinations',
@@ -67,16 +89,34 @@ export default function Home() {
               delay: userSettings.reducedMotion ? 0 : index * 0.1,
             }}
           >
-            <Link
-              href={card.href}
-              onClick={handleCardClick}
-              className="block p-6 rounded-lg glass-morphism hover:scale-105 transition-transform duration-200"
-            >
-              <h2 className="text-2xl font-semibold mb-2">{card.title}</h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                {card.description}
-              </p>
-            </Link>
+            {card.isSpecial ? (
+              <button
+                onClick={card.onClick}
+                className="block w-full p-6 rounded-lg glass-morphism hover:scale-105 transition-transform duration-200 text-left relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <h2 className="text-2xl font-semibold mb-2">{card.title}</h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {card.description}
+                  </p>
+                  <div className="mt-3 text-sm text-amber-600 dark:text-amber-400 font-medium">
+                    ✨ Cinematic Experience
+                  </div>
+                </div>
+              </button>
+            ) : (
+              <Link
+                href={card.href}
+                onClick={handleCardClick}
+                className="block p-6 rounded-lg glass-morphism hover:scale-105 transition-transform duration-200"
+              >
+                <h2 className="text-2xl font-semibold mb-2">{card.title}</h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {card.description}
+                </p>
+              </Link>
+            )}
           </motion.div>
         ))}
       </div>
@@ -92,6 +132,12 @@ export default function Home() {
           </p>
         </motion.div>
       )}
+      
+      {/* Cinematic Navigation Overlay */}
+      <CinematicNavigation
+        onComplete={handleCinematicComplete}
+        autoStart={false}
+      />
     </div>
   )
 }
